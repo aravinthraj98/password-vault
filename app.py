@@ -15,7 +15,7 @@ collection = db["password"]
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-@app.route('/',methods = ['GET', 'POST'])
+@app.route('/')
 def hello():
     if request.method=="POST":
         names = request.form["name"]
@@ -139,5 +139,5 @@ def showall():
 
 
 if __name__ == "__main__":
-    
+
     app.run(debug=True)
