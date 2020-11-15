@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action = "/find" method="POST">
+    <input type="text" name="name" value={{name}} readonly>
+    credential
+    <input type="text" name="cname">
+    password:
+    <input type="password" name="cpass" id="">
+    secret_pass(login password):
+    <input type="password" name="password" id="">
+    <input type="submit" value="submit">
+    </form>
+    <form method="POST" action="/getall">
+        <input type="text" name="name" value={{name}} readonly>
+        <input type="password" name="password" id="">
+        <input type="submit" value="submit">
+    </form>
+    {% if passwords %}
+    {% for j in password %}
+    {{passwords.cname[loop.index-1]}} :    {{j}}<br>
+    {% endfor %}
+    {% endif %}
+    
+</body>
+</html>
