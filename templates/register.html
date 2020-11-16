@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+  <form action="/register"  method="POST" class="container" style="margin:20%;width:55%;background-color:rgb(245, 194, 128)">
+username:<br>
+<input type="text" name="name" class="form-control" id=""><br>
+password:<br>
+<input type="password" name="password" class="form-control" id=""><br>
+confirm-password:<br>
+<input type="password" name="con_password" class="form-control" id=""><br>
+<input type="submit" value="submit" class="form-control btn btn-primary"><br>
+<p class="alert alert-info" style="text-align:center;">{{msg}}<br>YOUR CREDENTIALS WILL BE SAFELY ENCRYPTED <br>ONLY YOUR SECRET KEY CAN ABLE TO DECRYPT</p><br>
+
+</form>
+
+</body>

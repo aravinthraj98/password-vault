@@ -15,7 +15,30 @@ collection = db["password"]
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-@app.route('/')
+@app.route("/register",methods=["GET","POST"])
+def register():
+    if request.method=="POST":
+        names = request.form["name"]
+        password = request.form["password"]
+        con_password = request.form["con_password"]
+        if(password != con_password):
+            return render_template("register.html",msg="password and confirm password must not be same")
+        detail = login.find({"name":names})
+        a=''
+        for i in detail:
+            a=i
+            break
+        if a:
+             return render_template("register.html",msg="username already present")
+        pw_hash = bcrypt.generate_password_hash(password)
+        key = Fernet.generate_key()
+        login.insert_one({"name":names,"password":pw_hash.decode(),"key":key.decode()})
+        
+        return render_template("register.html",msg="registered success")
+    return render_template("register.html")
+
+
+@app.route('/',methods=["GET","POST"])
 def hello():
     if request.method=="POST":
         names = request.form["name"]
@@ -35,9 +58,9 @@ def hello():
             
             check = bcrypt.check_password_hash(p, password)
             if not check:
-                return "not match"
+                return render_template("index.html",msg="password incorrect")
             return render_template("home.html",name=names)
-        return "no detail"
+        return render_template("index.html",msg="no users found")
 
     return render_template('index.html')
 @app.route('/find',methods = ['POST'])
@@ -58,7 +81,7 @@ def add():
         p = bytes(a["password"],"utf-8")
         check = bcrypt.check_password_hash(p,password)
         if not check:
-            return "secret key must be your password credential"
+            return render_template("home.html",name=names,msg="your secret credential not matching ")
         k=a["key"]+password
         print(k)
         k=k.encode()
@@ -87,7 +110,7 @@ def add():
         d_cpass.append(cpass)
         collection.update_one({"name":names},{"$set":{"cname":d_cname,"cpass":d_cpass}})
 
-        return"updated"
+        return render_template("home.html",name=names,msg="password added to vault")
 
 @app.route('/getall',methods = ['POST'])
 def showall():
@@ -101,13 +124,17 @@ def showall():
 
           p = bytes(a["password"],"utf-8")
           check = bcrypt.check_password_hash(p,password)
-          if not check:
-              return "not match"
+          
           isfind = collection.find({"name":names})
           s=""
           for i in isfind:
               s=i
               break
+          if not check:
+              cd_pass=[]
+              for i in range(len(s["cname"])):
+                  cd_pass.append(s["cpass"][i])
+              return render_template("home.html",name=names,passwords = s,password=cd_pass)
           if s:
               k=a["key"]+password
               k=k.encode()
@@ -121,6 +148,7 @@ def showall():
               for i in range(len(s["cname"])):
                   p=f.decrypt(s["cpass"][i].encode("utf-8"))
                   cpass.append(p.decode())
+          
              
 
 
