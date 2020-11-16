@@ -34,7 +34,7 @@ def register():
         key = Fernet.generate_key()
         login.insert_one({"name":names,"password":pw_hash.decode(),"key":key.decode()})
         
-        return render_template("register.html",msg="registered success")
+        return render_template("index.html",msg="registered success")
     return render_template("register.html")
 
 
@@ -103,7 +103,7 @@ def add():
             d_cname.append(cname)
             d_cpass.append(cpass)
             collection.insert_one({"name":names,"cname":d_cname,"cpass":d_cpass})
-            return "inserted"
+            return render_template("home.html",name=names,msg="password added to vault")
         d_cname = s["cname"]
         d_cname.append(cname)
         d_cpass = s["cpass"]
