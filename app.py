@@ -136,10 +136,10 @@ def delete():
                       continue
                   print(i)
                   cd_pass.append(s["cpass"][i])
-                  cd_name.append(s["cname"][i])
+                  cd_cname.append(s["cname"][i])
                   
                   
-                  print(j)
+               
               collection.update_one({"name":names},{"$set":{"cname":cd_cname,"cpass":cd_pass}})
               return render_template("home.html",name=names,msg="password deleted")
 
