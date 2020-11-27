@@ -111,6 +111,39 @@ def add():
         collection.update_one({"name":names},{"$set":{"cname":d_cname,"cpass":d_cpass}})
 
         return render_template("home.html",name=names,msg="password added to vault")
+@app.route('/delete',methods = ['POST'])
+def delete():
+    if request.method=="POST":
+          index = request.form["submit"]
+          names = request.form["name"]
+
+          isfind = collection.find({"name":names})
+          s=""
+          check=False
+          for i in isfind:
+              s=i
+              check=True
+              break
+
+          
+          if  check:
+              cd_cname=[]
+              cd_pass=[]
+              print(index)
+              for i in range(len(s["cname"])):
+                  if i==int(index):
+                      print("hi")
+                      continue
+                  print(i)
+                  cd_pass.append(s["cpass"][i])
+                  cd_name.append(s["cname"][i])
+                  
+                  
+                  print(j)
+              collection.update_one({"name":names},{"$set":{"cname":cd_cname,"cpass":cd_pass}})
+              return render_template("home.html",name=names,msg="password deleted")
+
+
 
 @app.route('/getall',methods = ['POST'])
 def showall():

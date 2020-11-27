@@ -6,10 +6,17 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+       
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+           
+           ></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="background-color: rgb(50, 60, 109);">
     
-    <form action = "/find" method="POST" class="container" style="margin:5%;background-color:antiquewhite">
+    <form action = "/find" method="POST" class="container" style="margin:5%;background-color:thistle">
         <h1>ADD YOUR PASSWORDS</h1>
     <input type="text" name="name" value={{name}} readonly hidden>
     credential name:<br>
@@ -21,20 +28,61 @@
     <input type="submit" value="add credential" class="form-control btn btn-success"><br>
     {{msg}}<br>
     </form>
-    <p style="text-align: center;">
-        {% if passwords %}
-        {% for j in password %}
-        {{passwords.cname[loop.index-1]}} : {{j}}<br>
-        {% endfor %}
-        {% endif %}
-    </p>
+
+   
     <form method="POST" action="/getall" class="container" style="margin:5%;background-color:blanchedalmond">
         <input type="text" name="name" value={{name}} readonly hidden><br>
         ENTER YOUR SECRET LOGIN PASSWORD:[if u type wrong key your encrypted version will come]<br>
         <input type="password" name="password" class="form-control">
-        <input type="submit" value="get my password" class="form-control btn btn-info"><br><br>
+        <input type="submit" value="get my password" class="form-control btn btn-info" ><br><br>
     </form>
    
-    
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" style="width:100%;overflow:scroll;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">passwords</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/delete" method="POST" style="width: auto;overflow:scroll;">
+                    <input type="text" name="name" value={{name}} readonly hidden>
+                
+                    <p style="text-align: center;">
+
+                        {% if passwords %}
+                      
+
+                        <script>$('#exampleModalLong').modal('show');
+                        </script>
+                        <table>
+                           
+
+                        {% for j in password %}
+                        <tr>
+                        
+                       <td> {{passwords.cname[loop.index-1]}}</td> 
+                       <td style="padding-left:2%;">{{j}}</td><td><button type="submit" name="submit" value={{loop.index-1}}>delete
+                        </button></td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                    </p>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              
+            </div>
+        </div>
+    </div>
+</div>
+       
+        
 </body>
 </html>
+
