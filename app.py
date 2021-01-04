@@ -8,7 +8,7 @@ from cryptography.fernet import Fernet
 
 
 
-cluster = MongoClient("mongodb+srv://aravinth:aravinth@cluster0.riij8.mongodb.net/test?retryWrites=true&w=majority")
+cluster = MongoClient("mongodb+srv://********:********@cluster0.mongodb.net/test?retryWrites=true&w=majority")
 db = cluster["test"]
 login = db["login"]
 collection = db["password"]
